@@ -10,10 +10,30 @@ const CategoriesPage = () => {
     useEffect(()=> {
         axios.get<ICategoryItem[]>("http://localhost:8000/api/categories")
             .then(resp=> {
-                //console.log("list", resp.data);
+                console.log("list", resp.data);
                 setData(resp.data);
             });
     },[]);
+
+    const fetchCategories = () => {
+        axios.get<ICategoryItem[]>("http://localhost:8000/api/categories")
+            .then(resp => {
+                setData(resp.data);  
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
+
+    const handleDelete = (id: number) => {
+        axios.delete(`http://localhost:8000/api/categories/${id}`)
+            .then(() => {
+                fetchCategories()
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
 
     return (
         <>
@@ -34,6 +54,15 @@ const CategoriesPage = () => {
                                  alt="Sunset in the mountains"/>
                             <div className="px-6 py-4">
                                 <div className="font-bold text-xl mb-2 text-center">{item.name}</div>
+                                <div className="flex justify-around">
+                                    <button onClick={() => handleDelete(item.id)}
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    > Delete </button>
+                                    <Link to={`/edit/${item.id}`}>
+                                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                                    </Link>
+
+                                </div>
                             </div>
                         </div>
                     ))}
