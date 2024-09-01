@@ -30,7 +30,7 @@ const ProductListPage = () => {
 
     return (
         <>
-            <h1 className="text-center text-4xl font-bold">Продукти з id {id}</h1>
+            <h1 className="text-center text-4xl font-bold">Продукти з категорії {id}</h1>
             <Link to={"create"}>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Додати
